@@ -5,7 +5,8 @@ import "./navbar.css";
 
 const Navbar = () => {
 
-  const name=useSelector((state)=> state.user.name)
+  const name=useSelector((state)=> state.user.name);
+
   return (
     <div className="navbar">
       <div className="navbarWrapper">

@@ -2,19 +2,33 @@ import React from "react";
 import Warning from "../warning/Warning";
 import "./update.css";
 import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { remove, update } from "../../redux/userSlice";
 
 export default function Update() {
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
+   const [name, setName] = useState("");
+   const [email, setEmail] = useState("");
 
-  console.log(name,email);
+   const user=useSelector((state)=> state.user);
+   const dispatch=useDispatch();
+
+   const handleUpdate=(e)=>{
+      e.preventDefault();
+      dispatch(update({name,email}));
+   }
+
+   const handleDelete=(e)=>{
+      e.preventDefault();
+      console.log("handleDelete")
+      dispatch(remove());
+   }
 
   return (
     <div className="update">
       <div className="updateWrapper">
         <h3 className="updateTitle">Update Your Account</h3>
         <Warning />
-        <button className="delete">Delete Account</button>
+        <button onClick={handleDelete} className="delete">Delete Account</button>
         <div className="updateContainer">
           <form>
             <div className="formItem">
@@ -34,7 +48,7 @@ export default function Update() {
                 onChange={(e)=>setName(e.target.value)}
                 className="formInput"
                 type="text"
-                placeholder="John"
+                placeholder={user.name}
               />
             </div>
             <div className="formItem">
@@ -43,7 +57,7 @@ export default function Update() {
                 onChange={(e)=>setEmail(e.target.value)}
                 className="formInput"
                 type="text"
-                placeholder="john@gmail.com"
+                placeholder={user.email}
               />
             </div>
             <div className="formItem">
@@ -52,6 +66,7 @@ export default function Update() {
             </div>
             <button
               className="updateButton"
+              onClick={handleUpdate} 
             >
               Update
             </button>
